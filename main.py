@@ -6,10 +6,10 @@ import sqlite3
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent= None):
-        super(Consulta).__init__(parent)
+        super().__init__(parent)
         super().setupUi(self)
         self.btnEnviar.clicked.connect(self.envioBanco)
-        self.btnEnviar_2.clicked.connect(Consulta)
+        # self.btnEnviar_2.clicked.connect(Consulta)
 
     def envioBanco(self):
         try:
@@ -57,7 +57,7 @@ class Consulta(QMainWindow, Ui_Dialog):
 
 if __name__ == "__main__":
     qt = QApplication(sys.argv)
-    C = Consulta()
+    # C = Consulta()
     MW = MainWindow()
     MW.show()
     qt.exec_()
