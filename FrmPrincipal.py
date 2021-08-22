@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'InterfacePrincipal.ui'
+# Form implementation generated from reading ui file 'FrmPrincipal.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         self.btnEnviar.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
         self.btnEnviar.setObjectName("btnEnviar")
         self.fmPlanos = QtWidgets.QFrame(self.centralwidget)
-        self.fmPlanos.setGeometry(QtCore.QRect(10, 290, 531, 91))
+        self.fmPlanos.setGeometry(QtCore.QRect(80, 280, 381, 91))
         self.fmPlanos.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fmPlanos.setFrameShadow(QtWidgets.QFrame.Raised)
         self.fmPlanos.setObjectName("fmPlanos")
@@ -37,12 +37,12 @@ class Ui_MainWindow(object):
         self.RdUniversal = QtWidgets.QRadioButton(self.fmPlanos)
         self.RdUniversal.setObjectName("RdUniversal")
         self.gridLayout.addWidget(self.RdUniversal, 1, 1, 1, 1)
-        self.RdAnual = QtWidgets.QRadioButton(self.fmPlanos)
-        self.RdAnual.setObjectName("RdAnual")
-        self.gridLayout.addWidget(self.RdAnual, 1, 3, 1, 1)
         self.RdMensal = QtWidgets.QRadioButton(self.fmPlanos)
         self.RdMensal.setObjectName("RdMensal")
         self.gridLayout.addWidget(self.RdMensal, 1, 2, 1, 1)
+        self.RdAnual = QtWidgets.QRadioButton(self.fmPlanos)
+        self.RdAnual.setObjectName("RdAnual")
+        self.gridLayout.addWidget(self.RdAnual, 1, 3, 1, 1)
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(30, 20, 481, 241))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -111,14 +111,20 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainWindow.setTabOrder(self.leCliente, self.leEndereco)
+        MainWindow.setTabOrder(self.leEndereco, self.leTelefone)
+        MainWindow.setTabOrder(self.leTelefone, self.btnEnviar)
+        MainWindow.setTabOrder(self.btnEnviar, self.btnEnviar_2)
+        MainWindow.setTabOrder(self.btnEnviar_2, self.RdUniversal)
+        MainWindow.setTabOrder(self.RdUniversal, self.RdMensal)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.btnEnviar.setText(_translate("MainWindow", "ENVIAR"))
         self.RdUniversal.setText(_translate("MainWindow", "Plano Universal"))
-        self.RdAnual.setText(_translate("MainWindow", "Plano Anual"))
         self.RdMensal.setText(_translate("MainWindow", "Plano Mensal"))
+        self.RdAnual.setText(_translate("MainWindow", "Plano Anual"))
         self.label_2.setText(_translate("MainWindow", "                                       Endereco:"))
         self.label.setText(_translate("MainWindow", "                                          Cliente:"))
         self.label_3.setText(_translate("MainWindow", "                                       Telefone:"))
