@@ -1,15 +1,19 @@
 import sys
-from FrmBanco import *
 from FrmPrincipal import *
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
+from PyQt5.QtGui import QIcon
 import sqlite3
+import FrmBanco
+import resources_rc
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent= None):
         super().__init__(parent)
         super().setupUi(self)
         self.btnEnviar.clicked.connect(self.envioBanco)
-        # self.btnEnviar_2.clicked.connect(Consulta)
+        self.btnEnviar_2.clicked.connect(self.onMostraBanco)
+        self.btnEnviar.setIcon(QIcon(':/icon/save.png'))
+        self.btnEnviar_2.setIcon(QIcon(':/icon/open.png'))
 
     def envioBanco(self):
         try:
@@ -31,6 +35,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("Erro ao inserir os dados:", erro)
             self.errorbox(erro)
 
+    def onMostraBanco(self):
+        FrmBanco.show()
+
     def errorbox(self, erro):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Warning)
@@ -47,17 +54,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.RdMensal.setChecked(False)
         self.RdUniversal.setChecked(False)
 
-class Consulta(QMainWindow, Ui_Dialog):
+class FrmMostraBanco(QDialog):
     def __init__(self, parent=None):
-        super().__init__(parent)
-        super().setupUi(self)
-
-    def mostrar(self):
-        C.show()
+        super(FrmMostraBanco, self).__init__(parent)
+        self.ui = FrmBanco.Ui_Dialog()
+        self.ui.setupUi(self)
 
 if __name__ == "__main__":
     qt = QApplication(sys.argv)
-    # C = Consulta()
+    qt.setWindowIcon(QIcon(':/icon/database-icon.png'))
+
     MW = MainWindow()
     MW.show()
+
+    FrmBanco = FrmMostraBanco(MW)
+
     qt.exec_()
