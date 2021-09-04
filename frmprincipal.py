@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'FrmPrincipal.ui'
+# Form implementation generated from reading ui file 'frmprincipal.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -91,15 +91,15 @@ class Ui_MainWindow(object):
         self.leTelefone.setAlignment(QtCore.Qt.AlignCenter)
         self.leTelefone.setObjectName("leTelefone")
         self.gridLayout_2.addWidget(self.leTelefone, 6, 0, 1, 1)
-        self.btnEnviar_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.btnEnviar_2.setEnabled(True)
-        self.btnEnviar_2.setGeometry(QtCore.QRect(330, 400, 191, 51))
+        self.btnConsultar = QtWidgets.QPushButton(self.centralwidget)
+        self.btnConsultar.setEnabled(True)
+        self.btnConsultar.setGeometry(QtCore.QRect(330, 400, 191, 51))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.btnEnviar_2.setFont(font)
-        self.btnEnviar_2.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
-        self.btnEnviar_2.setObjectName("btnEnviar_2")
+        self.btnConsultar.setFont(font)
+        self.btnConsultar.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
+        self.btnConsultar.setObjectName("btnConsultar")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 551, 22))
@@ -114,8 +114,8 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.leCliente, self.leEndereco)
         MainWindow.setTabOrder(self.leEndereco, self.leTelefone)
         MainWindow.setTabOrder(self.leTelefone, self.btnEnviar)
-        MainWindow.setTabOrder(self.btnEnviar, self.btnEnviar_2)
-        MainWindow.setTabOrder(self.btnEnviar_2, self.RdUniversal)
+        MainWindow.setTabOrder(self.btnEnviar, self.btnConsultar)
+        MainWindow.setTabOrder(self.btnConsultar, self.RdUniversal)
         MainWindow.setTabOrder(self.RdUniversal, self.RdMensal)
 
     def retranslateUi(self, MainWindow):
@@ -128,4 +128,4 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "                                       Endereco:"))
         self.label.setText(_translate("MainWindow", "                                          Cliente:"))
         self.label_3.setText(_translate("MainWindow", "                                       Telefone:"))
-        self.btnEnviar_2.setText(_translate("MainWindow", "CONSULTAR"))
+        self.btnConsultar.setText(_translate("MainWindow", "CONSULTAR"))

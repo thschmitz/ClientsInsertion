@@ -177,7 +177,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="btnEnviar_2">
+   <widget class="QPushButton" name="btnConsultar">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -220,7 +220,7 @@
   <tabstop>leEndereco</tabstop>
   <tabstop>leTelefone</tabstop>
   <tabstop>btnEnviar</tabstop>
-  <tabstop>btnEnviar_2</tabstop>
+  <tabstop>btnConsultar</tabstop>
   <tabstop>RdUniversal</tabstop>
   <tabstop>RdMensal</tabstop>
  </tabstops>
