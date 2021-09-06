@@ -1,7 +1,9 @@
 import sqlite3
+from sqlite3.dbapi2 import Cursor
 import sys
 import frmbanco
 import frmedit
+import frmexcluir
 import resources_rc
 from tkinter import *
 from tkinter import ttk
@@ -9,9 +11,6 @@ from frmprincipal import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
 from PyQt5.QtGui import QIcon
 
-Nome = False
-Endereco = False
-Telefone = False
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent= None):
@@ -84,12 +83,14 @@ class FrmMostraBanco(QDialog):
         self.ui.setupUi(self)
         self.ui.btnProcurar.clicked.connect(self.consulta)
         self.ui.btnEditar.clicked.connect(self.onMostraEdit)
-        self.ui.btnEditar.clicked.connect(self.bancoConsulta)
+        self.ui.btnExcluir.clicked.connect(self.onMostraExcluir)
+        self.ui.btnEditar.clicked.connect(self.bancoConsultaEdit)
+        self.ui.btnExcluir.clicked.connect(self.bancoConsultaExcluir)
         self.ui.tableWidget_2.setEnabled(True)
         self.setWindowTitle("BancoClientes")
         self.setFixedSize(594, 553)
 
-    def bancoConsulta(self):
+    def bancoConsultaEdit(self):
         banco = sqlite3.connect("bancoclientes.db")
         cursor = banco.cursor()
         cursor.execute("SELECT * FROM dadosclientes")
@@ -99,6 +100,18 @@ class FrmMostraBanco(QDialog):
         for i in range(0, len(dados_lidos)):
             for j in range(0, 3):
                 frmEdit.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+        banco.close()
+    
+    def bancoConsultaExcluir(self):
+        banco = sqlite3.connect("bancoclientes.db")
+        cursor = banco.cursor()
+        cursor.execute("SELECT * FROM dadosclientes")
+        dados_lidos = cursor.fetchall()
+        frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
+        frmExcluir.ui.tableWidget_3.setColumnCount(3)
+        for i in range(0, len(dados_lidos)):
+            for j in range(0, 3):
+                frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
         banco.close()
 
     def consulta(self):
@@ -125,6 +138,10 @@ class FrmMostraBanco(QDialog):
     def onMostraEdit(self):
         frmEdit.show()
 
+    def onMostraExcluir(self):
+        frmExcluir.show()
+
+
 class FrmMostraEdit(QDialog):
     def __init__(self, parent):
         super(FrmMostraEdit, self).__init__(parent)
@@ -132,9 +149,9 @@ class FrmMostraEdit(QDialog):
         self.ui.setupUi(self)
         self.setWindowTitle("ConfigEdit")
         self.setFixedSize(576, 421)
+        self.ui.btnProcurar.clicked.connect(self.bancoEdicao)
         self.ui.btnAplicar.clicked.connect(self.aplicar)
         self.ui.btnCancelar.clicked.connect(self.cancelar)
-        self.ui.btnProcurar.clicked.connect(self.bancoEdicao)
         self.ui.tableWidget_3.selectionModel().selectionChanged.connect(self.onSelecaoPressionada)
         self.ui.btnProcurar_2.clicked.connect(self.redefinir)
 
@@ -143,15 +160,6 @@ class FrmMostraEdit(QDialog):
             for i in selected.indexes():
                 print("Linha: {}; Coluna: {}".format(i.row(), i.column()))
                 self.ui.lineColocar.setText(self.ui.tableWidget_3.item(i.row(), i.column()).text())
-                coordenadasRow = i.row()
-                coordenadasColumn = i.column()
-            if i.column() == 0:
-                Nome = True
-            elif i.column() == 1:
-                Endereco = True
-            elif i.column() == 2:
-                Telefone = True
-            return coordenadasRow
         except:
             pass
 
@@ -159,12 +167,7 @@ class FrmMostraEdit(QDialog):
         self.ui.lineColocar.setText("")
 
     def aplicar(self):
-        banco = sqlite3.connect("bancoclientes.db")
-        cursor = banco.cursor()
-        if Nome:
-            cursor.execute(f"UPDATE dadosclientes SET Cliente={self.ui.lineColocar} WHERE {self.coordenadasRow}") 
-            cursor.commit()
-        banco.close()
+        pass
 
     def bancoEdicao(self):
         try:
@@ -202,6 +205,62 @@ class FrmMostraEdit(QDialog):
                 frmEdit.ui.tableWidget_3.setEnabled(True)
         banco.close()
 
+class FrmMostraExcluir(QDialog):
+    def __init__(self, parent):
+        super(FrmMostraExcluir, self).__init__(parent)
+        self.ui = frmexcluir.Ui_Dialog()
+        self.ui.setupUi(self)
+        self.setWindowTitle("ConfigExcluir")
+        self.setFixedSize(496, 417)
+        self.ui.btnProcurar.clicked.connect(self.procura)
+        self.ui.btnAplicar.clicked.connect(self.excluir)
+        self.ui.tableWidget_3.selectionModel().selectionChanged.connect(self.excluir)
+
+    def excluir(self, selected):
+        banco = sqlite3.connect("bancoclientes.db")
+        cursor = banco.cursor()
+        try:
+            for i in selected.indexes():
+                print("Linha: {}".format(i.row()))
+                
+        except:
+            pass
+
+    def procura(self):
+        try:
+            if self.ui.linePesquisa_3.text() != "":
+                banco = sqlite3.connect("bancoclientes.db")
+                cursor = banco.cursor()
+                cursor.execute(f"SELECT * FROM dadosclientes WHERE Cliente LIKE '%{self.ui.linePesquisa_3.text()}%'")
+                dados_lidos = cursor.fetchall()
+                frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
+                frmExcluir.ui.tableWidget_3.setColumnCount(3)
+                for i in range(0, len(dados_lidos)):
+                    for j in range(0, 3):
+                        frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+                        frmExcluir.ui.tableWidget_3.setEnabled(True)
+                banco.close()
+            else:
+                frmExcluir.ui.tableWidget_3.clearContents()
+        except sqlite3.Error as erro:
+            print("Erro na pesquisa dos dados:", erro)
+            self.errorbox(f"Erro na pesquisa de clientes: {erro}")
+
+    def redefinir(self):
+        frmEdit.ui.tableWidget_3.clearContents()
+        self.ui.linePesquisa_3.setText("")
+        banco = sqlite3.connect("bancoclientes.db")
+        cursor = banco.cursor()
+        cursor.execute("SELECT * FROM dadosclientes")
+        dados_lidos = cursor.fetchall()
+        frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
+        frmExcluir.ui.tableWidget_3.setColumnCount(3)
+        for i in range(0, len(dados_lidos)):
+            for j in range(0, 3):
+                frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+                frmExcluir.ui.tableWidget_3.setEnabled(True)
+        banco.close()
+
 if __name__ == "__main__":
     qt = QApplication(sys.argv)
     qt.setWindowIcon(QIcon(':/icon/database-icon.png'))
@@ -211,4 +270,5 @@ if __name__ == "__main__":
 
     frmBanco = FrmMostraBanco(MW)
     frmEdit = FrmMostraEdit(frmBanco)
+    frmExcluir = FrmMostraExcluir(frmBanco)
     qt.exec_()
