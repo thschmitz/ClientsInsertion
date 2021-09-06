@@ -6,40 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
-    <height>417</height>
+    <width>576</width>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="horizontalLayoutWidget">
+  <widget class="QPushButton" name="btnAplicar">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>461</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Linha a ser editada</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="comboBox"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>380</y>
+     <x>480</x>
+     <y>250</y>
      <width>89</width>
      <height>25</height>
     </rect>
@@ -48,11 +26,11 @@
     <string>Aplicar</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btnCancelar">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>380</y>
+     <x>380</x>
+     <y>250</y>
      <width>89</width>
      <height>25</height>
     </rect>
@@ -61,131 +39,114 @@
     <string>Cancelar</string>
    </property>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_2">
+  <widget class="QTableWidget" name="tableWidget_3">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>110</y>
-     <width>311</width>
-     <height>131</height>
+     <x>0</x>
+     <y>50</y>
+     <width>321</width>
+     <height>321</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QTableWidget" name="tableWidget">
-      <column>
-       <property name="text">
-        <string>Nome</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Endereco</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Telefone</string>
-       </property>
-      </column>
-     </widget>
-    </item>
-   </layout>
+   <column>
+    <property name="text">
+     <string>Nome</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Endereco</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Telefone</string>
+    </property>
+   </column>
   </widget>
-  <widget class="QLineEdit" name="leCliente">
+  <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>260</y>
-     <width>151</width>
-     <height>25</height>
+     <x>325</x>
+     <y>50</y>
+     <width>251</width>
+     <height>192</height>
     </rect>
    </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::DefaultContextMenu</enum>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QPushButton" name="btnProcurar">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>260</y>
+     <x>230</x>
+     <y>10</y>
      <width>91</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Alterar nome</string>
+    <string>Procurar</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLineEdit" name="lineColocar">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>60</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="linePesquisa_2">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>10</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>300</y>
-     <width>121</width>
+     <y>16</y>
+     <width>71</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Alterar endereco</string>
+    <string>Pesquisa</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>340</y>
-     <width>121</width>
-     <height>21</height>
+     <x>400</x>
+     <y>380</y>
+     <width>171</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnProcurar_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>380</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Alterar telefone</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="leCliente_2">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>300</y>
-     <width>151</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::DefaultContextMenu</enum>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="leCliente_3">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>340</y>
-     <width>151</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::DefaultContextMenu</enum>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <string>Redefinir</string>
    </property>
   </widget>
  </widget>
