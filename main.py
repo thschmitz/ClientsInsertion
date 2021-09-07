@@ -213,18 +213,18 @@ class FrmMostraExcluir(QDialog):
         self.setWindowTitle("ConfigExcluir")
         self.setFixedSize(496, 417)
         self.ui.btnProcurar.clicked.connect(self.procura)
-        self.ui.btnAplicar.clicked.connect(self.excluir)
         self.ui.tableWidget_3.selectionModel().selectionChanged.connect(self.excluir)
 
     def excluir(self, selected):
-        banco = sqlite3.connect("bancoclientes.db")
-        cursor = banco.cursor()
         try:
-            for i in selected.indexes():
-                print("Linha: {}".format(i.row()))
-                
-        except:
-            pass
+            for ix in selected.indexes():
+                print(ix.row())
+                self.ui.tableWidget_3.removeRow(ix.row())
+            
+            
+        except sqlite3.Error as erro:
+            print("Erro que eu ainda nao entendi: {}".format(erro)) 
+            pass          
 
     def procura(self):
         try:
