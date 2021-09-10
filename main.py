@@ -10,6 +10,10 @@ from tkinter import ttk
 from frmprincipal import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
 from PyQt5.QtGui import QIcon
+deletados = []
+Cliente = False
+Endereco = False
+Telefone = False
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -69,9 +73,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         cursor.execute("SELECT * FROM dadosclientes")
         dados_lidos = cursor.fetchall()
         frmBanco.ui.tableWidget.setRowCount(len(dados_lidos))
-        frmBanco.ui.tableWidget.setColumnCount(3)
+        frmBanco.ui.tableWidget.setColumnCount(4)
         for i in range(0, len(dados_lidos)):
-            for j in range(0, 3):
+            for j in range(0, 4):
                 frmBanco.ui.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
         banco.close()
 
@@ -88,7 +92,22 @@ class FrmMostraBanco(QDialog):
         self.ui.btnExcluir.clicked.connect(self.bancoConsultaExcluir)
         self.ui.tableWidget_2.setEnabled(True)
         self.setWindowTitle("BancoClientes")
-        self.setFixedSize(594, 553)
+        self.setFixedSize(764, 551)
+
+    def atualizarBanco(self):
+        frmEdit.ui.tableWidget_3.clearContents()
+        self.ui.linePesquisa_2.setText("")
+        banco = sqlite3.connect("bancoclientes.db")
+        cursor = banco.cursor()
+        cursor.execute("SELECT * FROM dadosclientes")
+        dados_lidos = cursor.fetchall()
+        frmBanco.ui.tableWidget.setRowCount(len(dados_lidos))
+        frmBanco.ui.tableWidget.setColumnCount(4)
+        for i in range(0, len(dados_lidos)):
+            for j in range(0, 4):
+                frmBanco.ui.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+                frmBanco.ui.tableWidget.setEnabled(True)
+        banco.close()
 
     def bancoConsultaEdit(self):
         banco = sqlite3.connect("bancoclientes.db")
@@ -96,9 +115,9 @@ class FrmMostraBanco(QDialog):
         cursor.execute("SELECT * FROM dadosclientes")
         dados_lidos = cursor.fetchall()
         frmEdit.ui.tableWidget_3.setRowCount(len(dados_lidos))
-        frmEdit.ui.tableWidget_3.setColumnCount(3)
+        frmEdit.ui.tableWidget_3.setColumnCount(4)
         for i in range(0, len(dados_lidos)):
-            for j in range(0, 3):
+            for j in range(0, 4):
                 frmEdit.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
         banco.close()
     
@@ -108,9 +127,9 @@ class FrmMostraBanco(QDialog):
         cursor.execute("SELECT * FROM dadosclientes")
         dados_lidos = cursor.fetchall()
         frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
-        frmExcluir.ui.tableWidget_3.setColumnCount(3)
+        frmExcluir.ui.tableWidget_3.setColumnCount(4)
         for i in range(0, len(dados_lidos)):
-            for j in range(0, 3):
+            for j in range(0, 4):
                 frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
         banco.close()
 
@@ -122,9 +141,9 @@ class FrmMostraBanco(QDialog):
                 cursor.execute(f"SELECT * FROM dadosclientes WHERE Cliente LIKE '%{self.ui.linePesquisa.text()}%'")
                 dados_lidos = cursor.fetchall()
                 frmBanco.ui.tableWidget_2.setRowCount(len(dados_lidos))
-                frmBanco.ui.tableWidget_2.setColumnCount(3)
+                frmBanco.ui.tableWidget_2.setColumnCount(4)
                 for i in range(0, len(dados_lidos)):
-                    for j in range(0, 3):
+                    for j in range(0, 4):
                         frmBanco.ui.tableWidget_2.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
                         frmBanco.ui.tableWidget_2.setEnabled(True)
                 banco.close()
@@ -148,27 +167,68 @@ class FrmMostraEdit(QDialog):
         self.ui = frmedit.Ui_Dialog()
         self.ui.setupUi(self)
         self.setWindowTitle("ConfigEdit")
-        self.setFixedSize(576, 421)
+        self.setFixedSize(680, 421)
         self.ui.btnProcurar.clicked.connect(self.bancoEdicao)
         self.ui.btnAplicar.clicked.connect(self.aplicar)
-        self.ui.btnCancelar.clicked.connect(self.cancelar)
-        self.ui.tableWidget_3.selectionModel().selectionChanged.connect(self.onSelecaoPressionada)
         self.ui.btnProcurar_2.clicked.connect(self.redefinir)
+        self.ui.tableWidget_3.selectionModel().selectionChanged.connect(self.onSelecaoPressionada)
+
+    def mensagemTela(self, mensagem):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText(mensagem)
+        msg.setWindowTitle("Erro edicao")
+        msg.setStandardButtons(QMessageBox.Ok)
 
     def onSelecaoPressionada(self, selected):
-        try:
-            for i in selected.indexes():
-                print("Linha: {}; Coluna: {}".format(i.row(), i.column()))
-                self.ui.lineColocar.setText(self.ui.tableWidget_3.item(i.row(), i.column()).text())
-        except:
-            pass
-
-    def cancelar(self):
-        self.ui.lineColocar.setText("")
+            try:
+                for i in selected.indexes():
+                    self.ui.lineColocar.setText(self.ui.tableWidget_3.item(i.row(), i.column()).text())
+            except:
+                pass
 
     def aplicar(self):
-        pass
+        try:
+            i = self.ui.tableWidget_3.currentItem().row()
+            j = self.ui.tableWidget_3.currentItem().column()
+            print(i)
 
+
+            if self.ui.lineColocar.text() == "":
+                self.mensagemTela("Digite alguma informacao para a edicao do perfil do cliente")
+            else:
+                if j == 0:
+                    self.mensagemTela("Nao pode editar o ID do cliente")
+                elif j == 1:
+                    Cliente = True
+                elif j == 2:
+                    Endereco = True
+                elif j == 3:
+                    Telefone = True
+                banco = sqlite3.connect("bancoclientes.db")
+                cursor = banco.cursor()
+                cursor.execute("SELECT * FROM dadosclientes")
+                dados_lidos = cursor.fetchall()
+                id_pessoal = dados_lidos[i][0]
+                print(id_pessoal)
+                if Cliente:
+                    cursor.execute(f"UPDATE dadosclientes SET Cliente= '{self.ui.lineColocar.text()}' WHERE ID= {id_pessoal}")
+                    print("Registro atualizado")
+                elif Endereco:
+                    cursor.execute(f"UPDATE dadosclientes SET Endereco= '{self.ui.lineColocar.text()}' WHERE ID={id_pessoal}")
+                    print("Registro atualizado")
+                elif Telefone:
+                    cursor.execute(f"UPDATE dadosclientes SET Telefone= '{self.ui.lineColocar.text()}' WHERE ID={id_pessoal}")
+                    print("Registro atualizado")
+                else:
+                    print("SAIU")
+                banco.commit()
+                cursor.close()
+                banco.close()
+        except sqlite3.Error as erro:
+            print(f"ERRO: {erro}")
+            pass
+        
     def bancoEdicao(self):
         try:
             if self.ui.linePesquisa_2.text() != "":
@@ -177,9 +237,9 @@ class FrmMostraEdit(QDialog):
                 cursor.execute(f"SELECT * FROM dadosclientes WHERE Cliente LIKE '%{self.ui.linePesquisa_2.text()}%'")
                 dados_lidos = cursor.fetchall()
                 frmEdit.ui.tableWidget_3.setRowCount(len(dados_lidos))
-                frmEdit.ui.tableWidget_3.setColumnCount(3)
+                frmEdit.ui.tableWidget_3.setColumnCount(4)
                 for i in range(0, len(dados_lidos)):
-                    for j in range(0, 3):
+                    for j in range(0, 4):
                         frmEdit.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
                         frmEdit.ui.tableWidget_3.setEnabled(True)
                 banco.close()
@@ -198,9 +258,9 @@ class FrmMostraEdit(QDialog):
         cursor.execute("SELECT * FROM dadosclientes")
         dados_lidos = cursor.fetchall()
         frmEdit.ui.tableWidget_3.setRowCount(len(dados_lidos))
-        frmEdit.ui.tableWidget_3.setColumnCount(3)
+        frmEdit.ui.tableWidget_3.setColumnCount(4)
         for i in range(0, len(dados_lidos)):
-            for j in range(0, 3):
+            for j in range(0, 4):
                 frmEdit.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
                 frmEdit.ui.tableWidget_3.setEnabled(True)
         banco.close()
@@ -211,20 +271,49 @@ class FrmMostraExcluir(QDialog):
         self.ui = frmexcluir.Ui_Dialog()
         self.ui.setupUi(self)
         self.setWindowTitle("ConfigExcluir")
-        self.setFixedSize(496, 417)
+        self.setFixedSize(544, 422)
+        self.ui.btnAplicar.clicked.connect(self.aplicar)
         self.ui.btnProcurar.clicked.connect(self.procura)
+        self.ui.btnRedefinir.clicked.connect(self.redefinir)
         self.ui.tableWidget_3.selectionModel().selectionChanged.connect(self.excluir)
 
     def excluir(self, selected):
+        banco = sqlite3.connect("bancoclientes.db")
+        cursor = banco.cursor()
+        cursor.execute("SELECT * FROM dadosclientes")
+        dados_lidos = cursor.fetchall()
         try:
             for ix in selected.indexes():
-                print(ix.row())
                 self.ui.tableWidget_3.removeRow(ix.row())
-            
+                deletados.append(dados_lidos[ix.row()])
             
         except sqlite3.Error as erro:
             print("Erro que eu ainda nao entendi: {}".format(erro)) 
             pass          
+
+    def aplicar(self):
+        ret = QMessageBox.question(self, "MessageBox", "Tem certeza que deseja deletar?", QMessageBox.Yes | QMessageBox.No)
+
+        if ret == QMessageBox.Yes:
+            banco = sqlite3.connect("bancoclientes.db")
+            cursor = banco.cursor()
+            for i in deletados:
+                print(i[0])
+                cursor.execute(f"DELETE FROM dadosclientes WHERE ID={i[0]}")
+            cursor.close()
+            banco.commit()
+            banco.close()
+            
+        else:
+            banco = sqlite3.connect("bancoclientes.db")
+            cursor = banco.cursor()
+            cursor.execute("SELECT * FROM dadosclientes")
+            dados_lidos = cursor.fetchall()
+            frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
+            frmExcluir.ui.tableWidget_3.setColumnCount(4)
+            for i in range(0, len(dados_lidos)):
+                for j in range(0, 4):
+                    frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
 
     def procura(self):
         try:
@@ -234,9 +323,9 @@ class FrmMostraExcluir(QDialog):
                 cursor.execute(f"SELECT * FROM dadosclientes WHERE Cliente LIKE '%{self.ui.linePesquisa_3.text()}%'")
                 dados_lidos = cursor.fetchall()
                 frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
-                frmExcluir.ui.tableWidget_3.setColumnCount(3)
+                frmExcluir.ui.tableWidget_3.setColumnCount(4)
                 for i in range(0, len(dados_lidos)):
-                    for j in range(0, 3):
+                    for j in range(0, 4):
                         frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
                         frmExcluir.ui.tableWidget_3.setEnabled(True)
                 banco.close()
@@ -254,9 +343,9 @@ class FrmMostraExcluir(QDialog):
         cursor.execute("SELECT * FROM dadosclientes")
         dados_lidos = cursor.fetchall()
         frmExcluir.ui.tableWidget_3.setRowCount(len(dados_lidos))
-        frmExcluir.ui.tableWidget_3.setColumnCount(3)
+        frmExcluir.ui.tableWidget_3.setColumnCount(4)
         for i in range(0, len(dados_lidos)):
-            for j in range(0, 3):
+            for j in range(0, 4):
                 frmExcluir.ui.tableWidget_3.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
                 frmExcluir.ui.tableWidget_3.setEnabled(True)
         banco.close()

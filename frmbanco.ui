@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>592</width>
-    <height>548</height>
+    <width>764</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -22,7 +22,7 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>570</x>
      <y>510</y>
      <width>171</width>
      <height>31</height>
@@ -40,7 +40,7 @@
     <rect>
      <x>20</x>
      <y>280</y>
-     <width>561</width>
+     <width>731</width>
      <height>221</height>
     </rect>
    </property>
@@ -60,12 +60,17 @@
    </attribute>
    <column>
     <property name="text">
+     <string>ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>Nome</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Endereço</string>
+     <string>Endereco</string>
     </property>
    </column>
    <column>
@@ -89,7 +94,7 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>561</width>
+     <width>731</width>
      <height>223</height>
     </rect>
    </property>
@@ -107,6 +112,11 @@
    <attribute name="horizontalHeaderDefaultSectionSize">
     <number>180</number>
    </attribute>
+   <column>
+    <property name="text">
+     <string>ID</string>
+    </property>
+   </column>
    <column>
     <property name="text">
      <string>Nome</string>
@@ -173,6 +183,19 @@
    </property>
    <property name="text">
     <string>Excluir</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnAtualizar">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>240</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Atualizar</string>
    </property>
   </widget>
  </widget>
