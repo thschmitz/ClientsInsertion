@@ -90,13 +90,14 @@ class FrmMostraBanco(QDialog):
         self.ui.btnExcluir.clicked.connect(self.onMostraExcluir)
         self.ui.btnEditar.clicked.connect(self.bancoConsultaEdit)
         self.ui.btnExcluir.clicked.connect(self.bancoConsultaExcluir)
+        self.ui.btnAtualizar.clicked.connect(self.atualizarBanco)
         self.ui.tableWidget_2.setEnabled(True)
         self.setWindowTitle("BancoClientes")
         self.setFixedSize(764, 551)
 
     def atualizarBanco(self):
         frmEdit.ui.tableWidget_3.clearContents()
-        self.ui.linePesquisa_2.setText("")
+        self.ui.linePesquisa.setText("")
         banco = sqlite3.connect("bancoclientes.db")
         cursor = banco.cursor()
         cursor.execute("SELECT * FROM dadosclientes")
@@ -181,11 +182,11 @@ class FrmMostraEdit(QDialog):
         msg.setStandardButtons(QMessageBox.Ok)
 
     def onSelecaoPressionada(self, selected):
-            try:
-                for i in selected.indexes():
-                    self.ui.lineColocar.setText(self.ui.tableWidget_3.item(i.row(), i.column()).text())
-            except:
-                pass
+        try:
+            for i in selected.indexes():
+                self.ui.lineColocar.setText(self.ui.tableWidget_3.item(i.row(), i.column()).text())
+        except:
+            pass
 
     def aplicar(self):
         try:
