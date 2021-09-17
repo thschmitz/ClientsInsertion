@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'InterfacePrincipal.ui'
+# Form implementation generated from reading ui file 'frmprincipal.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         self.btnEnviar.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
         self.btnEnviar.setObjectName("btnEnviar")
         self.fmPlanos = QtWidgets.QFrame(self.centralwidget)
-        self.fmPlanos.setGeometry(QtCore.QRect(10, 290, 531, 91))
+        self.fmPlanos.setGeometry(QtCore.QRect(80, 280, 381, 91))
         self.fmPlanos.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fmPlanos.setFrameShadow(QtWidgets.QFrame.Raised)
         self.fmPlanos.setObjectName("fmPlanos")
@@ -37,12 +37,12 @@ class Ui_MainWindow(object):
         self.RdUniversal = QtWidgets.QRadioButton(self.fmPlanos)
         self.RdUniversal.setObjectName("RdUniversal")
         self.gridLayout.addWidget(self.RdUniversal, 1, 1, 1, 1)
-        self.RdAnual = QtWidgets.QRadioButton(self.fmPlanos)
-        self.RdAnual.setObjectName("RdAnual")
-        self.gridLayout.addWidget(self.RdAnual, 1, 3, 1, 1)
         self.RdMensal = QtWidgets.QRadioButton(self.fmPlanos)
         self.RdMensal.setObjectName("RdMensal")
         self.gridLayout.addWidget(self.RdMensal, 1, 2, 1, 1)
+        self.RdAnual = QtWidgets.QRadioButton(self.fmPlanos)
+        self.RdAnual.setObjectName("RdAnual")
+        self.gridLayout.addWidget(self.RdAnual, 1, 3, 1, 1)
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(30, 20, 481, 241))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -91,15 +91,15 @@ class Ui_MainWindow(object):
         self.leTelefone.setAlignment(QtCore.Qt.AlignCenter)
         self.leTelefone.setObjectName("leTelefone")
         self.gridLayout_2.addWidget(self.leTelefone, 6, 0, 1, 1)
-        self.btnEnviar_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.btnEnviar_2.setEnabled(True)
-        self.btnEnviar_2.setGeometry(QtCore.QRect(330, 400, 191, 51))
+        self.btnConsultar = QtWidgets.QPushButton(self.centralwidget)
+        self.btnConsultar.setEnabled(True)
+        self.btnConsultar.setGeometry(QtCore.QRect(330, 400, 191, 51))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.btnEnviar_2.setFont(font)
-        self.btnEnviar_2.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
-        self.btnEnviar_2.setObjectName("btnEnviar_2")
+        self.btnConsultar.setFont(font)
+        self.btnConsultar.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
+        self.btnConsultar.setObjectName("btnConsultar")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 551, 22))
@@ -111,15 +111,21 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainWindow.setTabOrder(self.leCliente, self.leEndereco)
+        MainWindow.setTabOrder(self.leEndereco, self.leTelefone)
+        MainWindow.setTabOrder(self.leTelefone, self.btnEnviar)
+        MainWindow.setTabOrder(self.btnEnviar, self.btnConsultar)
+        MainWindow.setTabOrder(self.btnConsultar, self.RdUniversal)
+        MainWindow.setTabOrder(self.RdUniversal, self.RdMensal)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.btnEnviar.setText(_translate("MainWindow", "ENVIAR"))
         self.RdUniversal.setText(_translate("MainWindow", "Plano Universal"))
-        self.RdAnual.setText(_translate("MainWindow", "Plano Anual"))
         self.RdMensal.setText(_translate("MainWindow", "Plano Mensal"))
+        self.RdAnual.setText(_translate("MainWindow", "Plano Anual"))
         self.label_2.setText(_translate("MainWindow", "                                       Endereco:"))
         self.label.setText(_translate("MainWindow", "                                          Cliente:"))
         self.label_3.setText(_translate("MainWindow", "                                       Telefone:"))
-        self.btnEnviar_2.setText(_translate("MainWindow", "CONSULTAR"))
+        self.btnConsultar.setText(_translate("MainWindow", "CONSULTAR"))
