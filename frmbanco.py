@@ -81,6 +81,9 @@ class Ui_Dialog(object):
         self.btnAtualizar = QtWidgets.QPushButton(Dialog)
         self.btnAtualizar.setGeometry(QtCore.QRect(650, 240, 91, 31))
         self.btnAtualizar.setObjectName("btnAtualizar")
+        self.btnPlanos = QtWidgets.QPushButton(Dialog)
+        self.btnPlanos.setGeometry(QtCore.QRect(340, 510, 91, 31))
+        self.btnPlanos.setObjectName("btnPlanos")
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept)
@@ -111,3 +114,4 @@ class Ui_Dialog(object):
         self.btnEditar.setText(_translate("Dialog", "Editar"))
         self.btnExcluir.setText(_translate("Dialog", "Excluir"))
         self.btnAtualizar.setText(_translate("Dialog", "Atualizar"))
+        self.btnPlanos.setText(_translate("Dialog", "Planos"))
