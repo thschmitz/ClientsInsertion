@@ -2,18 +2,19 @@ import sqlite3
 from sqlite3.dbapi2 import Cursor
 import sys
 import frmbanco
+import frmplano
 import frmedit
 import frmexcluir
 import resources_rc
 from tkinter import *
 from tkinter import ttk
 from frmprincipal import *
+import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
 from PyQt5.QtGui import QIcon
 deletados = []
-Cliente = False
-Endereco = False
-Telefone = False
+
+
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -27,6 +28,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnConsultar.setIcon(QIcon(':/icon/open.png'))
         self.setWindowTitle("InsercaoClientes")
         self.RdMensal.setChecked(True)
+
 
     def checagem(self):
         self.checado = False
@@ -88,6 +90,7 @@ class FrmMostraBanco(QDialog):
         self.ui.btnProcurar.clicked.connect(self.consulta)
         self.ui.btnEditar.clicked.connect(self.onMostraEdit)
         self.ui.btnExcluir.clicked.connect(self.onMostraExcluir)
+        self.ui.btnPlanos.clicked.connect(self.onMostraPlanos)
         self.ui.btnEditar.clicked.connect(self.bancoConsultaEdit)
         self.ui.btnExcluir.clicked.connect(self.bancoConsultaExcluir)
         self.ui.btnAtualizar.clicked.connect(self.atualizarBanco)
@@ -161,7 +164,14 @@ class FrmMostraBanco(QDialog):
     def onMostraExcluir(self):
         frmExcluir.show()
 
+    def onMostraPlanos(self):
+        fatias = [10, 15, 20]
+        atividades = ["Universal", "Anual", "Mensal"]
+        colunas = ["r", "m", "y"]
+        plt.pie(fatias, labels = atividades, colors = colunas, startangle=90, shadow=True, explode=(0.1, 0, 0))
+        plt.show()
 
+    
 class FrmMostraEdit(QDialog):
     def __init__(self, parent):
         super(FrmMostraEdit, self).__init__(parent)
@@ -193,7 +203,9 @@ class FrmMostraEdit(QDialog):
             i = self.ui.tableWidget_3.currentItem().row()
             j = self.ui.tableWidget_3.currentItem().column()
             print(i)
-
+            Cliente = False
+            Endereco = False
+            Telefone = False
 
             if self.ui.lineColocar.text() == "":
                 self.mensagemTela("Digite alguma informacao para a edicao do perfil do cliente")
